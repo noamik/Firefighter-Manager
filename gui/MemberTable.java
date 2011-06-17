@@ -34,10 +34,16 @@ public class MemberTable implements TableModelListener {
 	private JComboBox Dienstgrade 	= null;
 	private JComboBox Status      	= null;
 	
+	/**
+	 * 
+	 */
 	public MemberTable() {
 		initialize();
 	}
 	
+	/**
+	 * @return
+	 */
 	public Object[][] getData() {
 		return data;
 	}
@@ -62,18 +68,28 @@ public class MemberTable implements TableModelListener {
         memberTable.getModel().addTableModelListener(this);
 	}
 
+	/**
+	 * @param data
+	 */
 	public void updateMemberTableData(Object[][] data) {
 		this.data = data;
 		gmt.setData(data);
 		this.getGenericTable().fireTableDataChanged();
 	}
 	
+	/**
+	 * @param Mitglieder
+	 */
 	public void updateMemberTableData(HashMap<Integer,Mitglied> Mitglieder) {
 		data = createMemberTableArray(Mitglieder);
 		gmt.setData(data);
 		getGenericTable().fireTableDataChanged();
 	}
 	
+	/**
+	 * @param Mitglieder
+	 * @return
+	 */
 	public Object[][] createMemberTableArray(HashMap<Integer,Mitglied> Mitglieder) {
 		if(Mitglieder.size() == 0)
 			return null;
@@ -129,18 +145,30 @@ public class MemberTable implements TableModelListener {
 			Status.addItem(it.next());
 	}
 
+	/**
+	 * @return
+	 */
 	public String[] getTitles() {
 		return titles;
 	}
 	
+	/**
+	 * @return
+	 */
 	public JTable getTable() {
 		return memberTable;
 	}
 	
+	/**
+	 * @return
+	 */
 	public GenericTable getGenericTable() {
 		return gmt;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.event.TableModelListener#tableChanged(javax.swing.event.TableModelEvent)
+	 */
 	@Override
 	public void tableChanged(TableModelEvent arg0) {
 		// TODO Auto-generated method stub
@@ -150,6 +178,9 @@ public class MemberTable implements TableModelListener {
 //		printTableToConsole();
 	}
 	
+	/**
+	 * 
+	 */
 	public void printTableToConsole() {
 		System.out.println("------------------------------------");
 		for(int i=0; i<memberTable.getModel().getRowCount();i++) {

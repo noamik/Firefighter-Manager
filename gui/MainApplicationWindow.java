@@ -74,7 +74,7 @@ public class MainApplicationWindow {
 	 * 
 	 * @return javax.swing.JFrame
 	 */
-	private JFrame getJFrame() {
+	public JFrame getJFrame() {
 		if (jFrame == null) {
 			jFrame = new JFrame();
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

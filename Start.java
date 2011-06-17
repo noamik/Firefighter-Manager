@@ -21,7 +21,7 @@ public class Start {
 		data.GlobalData.getInstance();
 		System.out.println("Global instance created");
 		MainApplicationWindow.launchWindow();	
-        System.out.println("Created new GUI");
+		System.out.println("Created new GUI");
 	}
 	
 	/**
