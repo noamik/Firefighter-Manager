@@ -1,6 +1,5 @@
 package gui.generic;
 
-import gui.DeleteMemberPopup;
 import gui.MainApplicationWindow;
 
 import java.awt.Component;
