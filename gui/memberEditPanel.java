@@ -1,8 +1,6 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.Collection;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;

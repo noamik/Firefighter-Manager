@@ -74,6 +74,7 @@ public class MemberTable implements TableModelListener {
 	public void updateMemberTableData(Object[][] data) {
 		this.data = data;
 		gmt.setData(data);
+		gmt.setColumnEditable(0, false);
 		this.getGenericTable().fireTableDataChanged();
 	}
 	
@@ -83,6 +84,7 @@ public class MemberTable implements TableModelListener {
 	public void updateMemberTableData(HashMap<Integer,Mitglied> Mitglieder) {
 		data = createMemberTableArray(Mitglieder);
 		gmt.setData(data);
+		gmt.setColumnEditable(0, false);
 		getGenericTable().fireTableDataChanged();
 	}
 	

@@ -21,6 +21,9 @@ public class GenericTable extends AbstractTableModel {
 	 */
 	public void setData(Object[][] data) {
 		this.data = data;
+		editable = new Boolean[getRowCount()][getColumnCount()];
+		for(int i=0;i<data.length;i++)
+			setRowEditable(i,Boolean.TRUE);
 	}
 	
 	public GenericTable(String[] titles, Object[][] data) {
@@ -76,6 +79,8 @@ public class GenericTable extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int row, int col) {
+		if(row == -1 || col == -1)
+			return null;
 		if(row>getRowCount())
 			return null;
 		if(col>getColumnCount())

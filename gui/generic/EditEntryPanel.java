@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.JTableHeader;
 
 public class EditEntryPanel {
 	private JTable editableTable 		= null;

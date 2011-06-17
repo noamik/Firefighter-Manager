@@ -5,12 +5,10 @@ import gui.MainApplicationWindow;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map.Entry;
 
 import datascheme.IdStringMatcher;
 import datascheme.Mitglied;
 
-import util.util;
 
 /**
  * Created by noamik
@@ -106,6 +104,21 @@ public class GlobalData {
 		dbq.returnConnection();
 		MainApplicationWindow.getMainWindow().getMemberTable().updateMemberTableData(this.Mitglieder);
 		System.out.println("Added member!");
+	}
+	
+	public void removeMember(Integer Id) {
+		this.Mitglieder.remove(Id);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.deleteMember(Id);
+			dbq.deleteMTraining(Id);
+			dbq.deleteMRank(Id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		MainApplicationWindow.getMainWindow().getMemberTable().updateMemberTableData(this.Mitglieder);
+		System.out.println("Removed member!");
 	}
 
 	/**
