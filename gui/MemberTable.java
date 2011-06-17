@@ -175,7 +175,22 @@ public class MemberTable implements TableModelListener {
 	public void tableChanged(TableModelEvent arg0) {
 		// TODO Auto-generated method stub
 //		memberTable.addNotify();
-		System.out.println("Table changed: FirstRow:"+arg0.getFirstRow() + " Col:"+arg0.getColumn());
+		Integer col = arg0.getColumn();
+		System.out.println("Table changed: FirstRow:"+arg0.getFirstRow() + " Col:"+col);
+		if(col != -1 && col != 7) {
+			System.out.println("Value: " + gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1));
+			Mitglied member = GlobalData.getInstance().getMitglieder().get(gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1));
+			Object item = gmt.getValueAt(arg0.getFirstRow(), col);
+			switch(col) {
+				case 1: member.setName((String)item); break;
+				case 2: member.setVorname((String)item); break;
+				case 3: member.setDienstgrad(GlobalData.getInstance().getDienstgrade().getId((String)item)); break;
+				case 4: member.setGeburtsdatum(util.StringToDate((String)item)); break;
+				case 5: member.setAufnahmedatum(util.StringToDate((String)item)); break;
+				case 6: member.setStatus(GlobalData.getInstance().getMemberStatus().getId((String)item)); break;
+			}
+			GlobalData.getInstance().addMember(member);
+		}
 		//TODO: hier dann die Änderung in die DB und GlobalData schreiben
 //		printTableToConsole();
 	}

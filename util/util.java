@@ -19,7 +19,7 @@ public class util {
 		try {
 			date = DatumsFormat.parse(datestring);
 		} catch (ParseException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return DefaultDate;
 		}
     	return date;
