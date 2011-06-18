@@ -168,7 +168,7 @@ public class GlobalData {
 			e.printStackTrace();
 		}
 		dbq.returnConnection();
-		MainApplicationWindow.getMainWindow().getRankTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		MainApplicationWindow.getMainWindow().getRankTable().getRankedElemTable().updateMemberTableData(this.Dienstgrade);
 		System.out.println("Removed rank!");
 	}
 	
@@ -193,7 +193,7 @@ public class GlobalData {
 			e.printStackTrace();
 		}
 		dbq.returnConnection();
-		MainApplicationWindow.getMainWindow().getStatusTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		MainApplicationWindow.getMainWindow().getStatusTable().getRankedElemTable().updateMemberTableData(this.MemberStatus);
 		System.out.println("Removed status!");
 	}
 

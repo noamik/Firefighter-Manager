@@ -54,9 +54,6 @@ public class MainApplicationWindow {
 	private JSplitPane settingsTopSplitPane = null;
 	private JSplitPane settingsBotSplitPane = null;
 	
-	private JPanel ausbildungenTopLeftPane = null;
-	private JPanel dienstgradeTopRightPane = null;
-	private JPanel statiBotLeftPane = null;
 	private JPanel genericSettingsBotRightPane = null;
 	
 	private MemberTable mt = null;  //  @jve:decl-index=0:
