@@ -98,8 +98,11 @@ public class RankedElementsEditPanel extends JPanel {
 				if(name.equals("Ausbildung")) {
 					GlobalData.getInstance().addTraining(gt.getMaxId()+1, elem);
 				}
-				if(name.equals("Ausbildung")) {
-					GlobalData.getInstance().addTraining(gt.getMaxId()+1, elem);
+				if(name.equals("Dienstgrade")) {
+					GlobalData.getInstance().addRank(gt.getMaxId()+1, elem);
+				}
+				if(name.equals("Status")) {
+					GlobalData.getInstance().addStatus(gt.getMaxId()+1, elem);
 				}
 				gt.getGenericTable().setData(gt.createTableArray(ism));
 				gt.getGenericTable().fireTableDataChanged();

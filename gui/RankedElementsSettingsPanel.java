@@ -22,8 +22,8 @@ public class RankedElementsSettingsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private EditEntryPanel tablePanel = null;  //  @jve:decl-index=0:
-	private RankedElemsTable tt = null;  //  @jve:decl-index=0:
+	private EditEntryPanel basePanel = null;  //  @jve:decl-index=0:
+	private RankedElemsTable table = null;  //  @jve:decl-index=0:
 	private String name = null;
 
 
@@ -52,25 +52,25 @@ public class RankedElementsSettingsPanel extends JPanel {
 	}
 
 	/**
-	 * @return the tt
+	 * @return the table
 	 */
 	public RankedElemsTable getRankedElemTable() {
-		return tt;
+		return table;
 	}
 
 	/**
-	 * @param tt the tt to set
+	 * @param table the table to set
 	 */
 	public void setTrainTable(RankedElemsTable tt) {
-		this.tt = tt;
+		this.table = tt;
 	}
 	/**
 	 * @return
 	 */
 	private JPanel getRankedElementsPane() {
-		if(tablePanel == null)
-			tablePanel = initAusbildungsJPanel();
-        return tablePanel.getPanel();	
+		if(basePanel == null)
+			basePanel = initJPanel();
+        return basePanel.getPanel();	
 	}
 	
 	/**
@@ -78,14 +78,14 @@ public class RankedElementsSettingsPanel extends JPanel {
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
-	private EditEntryPanel initAusbildungsJPanel() {
+	private EditEntryPanel initJPanel() {
 		if(name.equalsIgnoreCase("Ausbildung"))
-			tt = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getLehrgänge());
+			table = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getLehrgänge());
 		if(name.equalsIgnoreCase("Dienstgrade"))
-			tt = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getDienstgrade());
+			table = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getDienstgrade());
 		if(name.equalsIgnoreCase("Status"))
-			tt = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getMemberStatus());
-		return new EditEntryPanel(null,null,tt.getTable(),new RankedElementsEditPanel(tt.getIdStringMatcher(), name, tt));
+			table = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getMemberStatus());
+		return new EditEntryPanel(null,null,table.getTable(),new RankedElementsEditPanel(table.getIdStringMatcher(), name, table));
 	}
 
 }

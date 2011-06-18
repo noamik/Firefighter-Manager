@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import data.GlobalData;
 import datascheme.IdStringMatcher;
 
 public class ISMButtonEditor extends DefaultCellEditor {
@@ -23,33 +24,46 @@ public class ISMButtonEditor extends DefaultCellEditor {
 	  private String    label;
 	  private boolean   isPushed;
 	  private IdStringMatcher ism;
+	  private String name;
 
-	  public ISMButtonEditor(JCheckBox checkBox, IdStringMatcher tism) {
+	  public ISMButtonEditor(JCheckBox checkBox, IdStringMatcher tism, String tname) {
 	    super(checkBox);
 	    ism = tism;
+	    name = tname;
 	    button = new JButton();
-	    button.setOpaque(true);
-	    button.addActionListener(new ActionListener() {
-	      public void actionPerformed(ActionEvent e) {
-	    	  int n = JOptionPane.showConfirmDialog(MainApplicationWindow.getMainWindow().getJFrame(),
-		    		  ism.getElement(Integer.parseInt(label)).toString(),
-	                  "Wirklich löschen?",
-	                  JOptionPane.OK_CANCEL_OPTION,
-	                  JOptionPane.WARNING_MESSAGE);
-	          if (n == JOptionPane.YES_OPTION) {
-	        	  ism.removeElement(Integer.parseInt(label));
-//	        	  System.out.println("Yes");
-	              //TODO: Answer was Yes
-	          } /*else if (n == JOptionPane.CANCEL_OPTION) {
-	              //TODO: Answer was Yes
-	        	  System.out.println("Cancel");
-	          } else {
-	              //TODO: Clicked X
-	        	  System.out.println("X");
-	          }*/
-	        fireEditingStopped();
-	      }
-	    });
+	    initialize();
+	  }
+	  
+	  private void initialize() {
+		  button.setOpaque(true);
+		  button.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+		    	  Integer id = Integer.parseInt(label);
+		    	  int n = JOptionPane.showConfirmDialog(MainApplicationWindow.getMainWindow().getJFrame(),
+			    		  ism.getElement(id).toString(),
+		                  "Wirklich löschen?",
+		                  JOptionPane.OK_CANCEL_OPTION,
+		                  JOptionPane.WARNING_MESSAGE);
+		          if (n == JOptionPane.YES_OPTION) {
+		        	if(name.equalsIgnoreCase("Ausbildung"))
+		      			GlobalData.getInstance().removeTraining(id);
+		      		if(name.equalsIgnoreCase("Dienstgrade"))
+		      			GlobalData.getInstance().removeRank(id);
+		      		if(name.equalsIgnoreCase("Status"))
+		      			GlobalData.getInstance().removeStatus(id);
+//		        	  ism.removeElement(Integer.parseInt(label));
+//		        	  System.out.println("Yes");
+		              //TODO: Answer was Yes
+		          } /*else if (n == JOptionPane.CANCEL_OPTION) {
+		              //TODO: Answer was Yes
+		        	  System.out.println("Cancel");
+		          } else {
+		              //TODO: Clicked X
+		        	  System.out.println("X");
+		          }*/
+		        fireEditingStopped();
+		      }
+		    });
 	  }
 
 	  public Component getTableCellEditorComponent(JTable table, Object value,

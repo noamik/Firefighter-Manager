@@ -140,7 +140,7 @@ public class RankedElemsTable implements TableModelListener {
 
 	private void replaceColumnWithButton(TableColumn dgc) {
 		dgc.setCellRenderer(new ButtonRenderer());
-	    dgc.setCellEditor(new ISMButtonEditor(new JCheckBox(), ism));
+	    dgc.setCellEditor(new ISMButtonEditor(new JCheckBox(), ism, titles[1]));
 	}
 
 	@Override
