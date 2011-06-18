@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import datascheme.IdStringMatcher;
 import datascheme.Mitglied;
+import datascheme.RankedElement;
 
 
 /**
@@ -119,6 +120,81 @@ public class GlobalData {
 		dbq.returnConnection();
 		MainApplicationWindow.getMainWindow().getMemberTable().updateMemberTableData(this.Mitglieder);
 		System.out.println("Removed member!");
+	}
+	
+	public void addTraining(Integer id, RankedElement elem) {
+		this.Lehrgänge.getElements().put(id,elem);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.addTraining(elem.getDBObjectArray(id));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		System.out.println("Added training!");
+	}
+	
+	public void removeTraining(Integer Id) {
+		this.Lehrgänge.removeElement(Id);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.deleteTraining(Id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		MainApplicationWindow.getMainWindow().getTrainTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		System.out.println("Removed training!");
+	}
+	
+	public void addRank(Integer id, RankedElement elem) {
+		this.Dienstgrade.getElements().put(id,elem);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.addRank(elem.getDBObjectArray(id));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		System.out.println("Added rank!");
+	}
+	
+	public void removeRank(Integer Id) {
+		this.Dienstgrade.removeElement(Id);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.deleteRank(Id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		MainApplicationWindow.getMainWindow().getRankTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		System.out.println("Removed rank!");
+	}
+	
+	public void addStatus(Integer id, RankedElement elem) {
+		this.MemberStatus.getElements().put(id,elem);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.addMemberStatus(elem.getDBObjectArray(id));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		System.out.println("Added status!");
+	}
+	
+	public void removeStatus(Integer Id) {
+		this.MemberStatus.removeElement(Id);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.deleteMemberStatus(Id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+		MainApplicationWindow.getMainWindow().getStatusTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		System.out.println("Removed status!");
 	}
 
 	/**

@@ -54,13 +54,16 @@ public class MainApplicationWindow {
 	private JSplitPane settingsTopSplitPane = null;
 	private JSplitPane settingsBotSplitPane = null;
 	
-	private JPanel settingsTopLeftPane = null;
-	private JPanel settingsTopRightPane = null;
-	private JPanel settingsBotLeftPane = null;
-	private JPanel settingsBotRightPane = null;
+	private JPanel ausbildungenTopLeftPane = null;
+	private JPanel dienstgradeTopRightPane = null;
+	private JPanel statiBotLeftPane = null;
+	private JPanel genericSettingsBotRightPane = null;
 	
 	private MemberTable mt = null;  //  @jve:decl-index=0:
-	EditEntryPanel memberTablePanel = null;  //  @jve:decl-index=0:
+	private EditEntryPanel memberTablePanel = null;  //  @jve:decl-index=0:
+	private RankedElementsSettingsPanel tsp = null;
+	private RankedElementsSettingsPanel rsp = null;
+	private RankedElementsSettingsPanel ssp = null;
 
 	private MainApplicationWindow() {
 	}
@@ -122,10 +125,10 @@ public class MainApplicationWindow {
 	private JSplitPane getSettings() {
 		//Put the editor pane and the text pane in a split pane.
 		settingsTopSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                getStatusTable(),
+                getTrainTable(),
                 getRankTable());
 		settingsBotSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                getTrainingsTable(),
+                getStatusTable(),
                 getGeneralSettings());
         settingsOuterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
         										settingsTopSplitPane,
@@ -139,37 +142,29 @@ public class MainApplicationWindow {
         return settingsOuterSplitPane;
 	}
 	
-	private JPanel getStatusTable() {
-		settingsTopLeftPane = new JPanel();
-		settingsTopLeftPane.setLayout(new GridLayout(0,1));
-		settingsTopLeftPane.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("Mitgliedsstati"),
-                BorderFactory.createEmptyBorder(5,5,5,5)));
-        return settingsTopLeftPane;
+	public RankedElementsSettingsPanel getTrainTable() {
+		if(tsp == null)
+			tsp = new RankedElementsSettingsPanel("Ausbildung");
+        return tsp;
 	}
-	private JPanel getRankTable() {
-		settingsTopRightPane = new JPanel();
-		settingsTopRightPane.setLayout(new GridLayout(0,1));
-		settingsTopRightPane.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("Dienstgrade"),
-                BorderFactory.createEmptyBorder(5,5,5,5)));
-        return settingsTopRightPane;
+	public RankedElementsSettingsPanel getRankTable() {
+		if(rsp == null)
+			rsp = new RankedElementsSettingsPanel("Dienstgrade");
+        return rsp;
 	}
-	private JPanel getTrainingsTable() {
-		settingsBotLeftPane = new JPanel();
-		settingsBotLeftPane.setLayout(new GridLayout(0,1));
-		settingsBotLeftPane.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("Ausbildungen"),
-                BorderFactory.createEmptyBorder(5,5,5,5)));
-        return settingsBotLeftPane;
+	
+	public RankedElementsSettingsPanel getStatusTable() {
+		if(ssp == null)
+			ssp = new RankedElementsSettingsPanel("Status");
+        return ssp;
 	}
 	private JPanel getGeneralSettings() {
-		settingsBotRightPane = new JPanel();
-		settingsBotRightPane.setLayout(new GridLayout(0,1));
-		settingsBotRightPane.setBorder(BorderFactory.createCompoundBorder(
+		genericSettingsBotRightPane = new JPanel();
+		genericSettingsBotRightPane.setLayout(new GridLayout(0,1));
+		genericSettingsBotRightPane.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder("Allgemeine Einstellungen"),
                 BorderFactory.createEmptyBorder(5,5,5,5)));
-        return settingsBotRightPane;
+        return genericSettingsBotRightPane;
 	}
 	
 	/**
@@ -189,7 +184,7 @@ public class MainApplicationWindow {
 	 * @return javax.swing.JScrollPane	
 	 */
 	private EditEntryPanel initMemberJPanel() {
-		return new EditEntryPanel(null,getJMemberTable(),new memberEditPanel());
+		return new EditEntryPanel(null,null/*"Mitgliedertabelle"*/,getJMemberTable(),new MemberEditPanel());
 	}
 	
 	private JTable getJMemberTable() {
@@ -200,6 +195,8 @@ public class MainApplicationWindow {
 	public MemberTable getMemberTable() {
 		return mt;
 	}
+	
+	
 	
 	private MemberTable initMemberTable() {
 		mt = new MemberTable();

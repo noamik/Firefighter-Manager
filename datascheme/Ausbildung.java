@@ -41,7 +41,7 @@ public class Ausbildung {
         	if(o == null)
         		break;
             counter = (Integer)o;
-            result = result + "Lehrgang: " + GlobalData.getInstance().getLehrgänge().getElement(counter)
+            result = result + "Lehrgang: " + GlobalData.getInstance().getLehrgänge().getElementString(counter)
                      + " absolviert: " + util.DateToString(this.Lehrgänge.get(counter))
                      + util.NewLine;
         }

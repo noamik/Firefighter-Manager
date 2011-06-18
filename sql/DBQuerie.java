@@ -15,6 +15,7 @@ import datascheme.IdStringMatcher;
 import datascheme.Karriere;
 import datascheme.Lehrgang;
 import datascheme.Mitglied;
+import datascheme.RankedElement;
 
 
 /**
@@ -44,6 +45,7 @@ public class DBQuerie {
 	private final String DIG_DIENSTGRAD      = "Dienstgrad";
 	
 	private final String ID                  = "id";
+	private final String POS				 = "Position";
 	
 	private final String GET_MEMBER_LIST       = "SELECT * FROM Mitglieder;";
 	private final String GET_MEMBERS_TRAININGS = "SELECT * FROM Mitgliederausbildung WHERE " + MAS_MITGLID + " = ?;";
@@ -54,10 +56,10 @@ public class DBQuerie {
 	
 	private final String ADD_MLIST_MEMBER      = "INSERT OR REPLACE INTO Mitglieder VALUES (?, ?, ?, ?, ?, ?, ?);";
 	private final String ADD_MTLIST_TRAINING   = "INSERT OR REPLACE INTO Mitgliederausbildung VALUES (?, ?, ?, ?);";
-	private final String ADD_AUSBILDUNG        = "INSERT OR REPLACE INTO Ausbildungen VALUES (?, ?);";
-	private final String ADD_DIENSTGRAD        = "INSERT OR REPLACE INTO Dienstgrade VALUES (?, ?);";
+	private final String ADD_AUSBILDUNG        = "INSERT OR REPLACE INTO Ausbildungen VALUES (?, ?, ?);";
+	private final String ADD_DIENSTGRAD        = "INSERT OR REPLACE INTO Dienstgrade VALUES (?, ?, ?);";
 	private final String ADD_MITGL_KARRIERE    = "INSERT OR REPLACE INTO Dienstgraddaten VALUES (?, ?, ?, ?);";
-	private final String ADD_MEMBERSTATUS      = "INSERT OR REPLACE INTO MemberStatus VALUES (?, ?);";
+	private final String ADD_MEMBERSTATUS      = "INSERT OR REPLACE INTO MemberStatus VALUES (?, ?, ?);";
 	
 	private final String DEL_MEMBER            = "DELETE FROM Mitglieder WHERE "+ID+" = ?;";
 	private final String DEL_M_TRAINING        = "DELETE FROM Mitgliederausbildung WHERE "+ID+" = ?;";
@@ -89,7 +91,7 @@ public class DBQuerie {
         ResultSet  rs = st.executeQuery( GET_TRAININGS );
         while (rs.next()) {
         	Lehrgänge.addElement(rs.getInt(ID)
-        			           , rs.getString(AUS_Ausbildung));
+        			           , new RankedElement(rs.getString(AUS_Ausbildung), rs.getInt(POS)));
         }
         rs.close();
 		return Lehrgänge;
@@ -105,7 +107,7 @@ public class DBQuerie {
         ResultSet  rs = st.executeQuery( GET_MEMBERSTATUS );
         while (rs.next()) {
         	MemberStatus.addElement(rs.getInt(ID)
-        			              , rs.getString(MS_STATUS));
+        							, new RankedElement(rs.getString(MS_STATUS), rs.getInt(POS)));
         }
         rs.close();
 		return MemberStatus;
@@ -121,7 +123,7 @@ public class DBQuerie {
         ResultSet  rs = st.executeQuery( GET_DIENSTGRADE );
         while (rs.next()) {
         	Dienstgrade.addElement(rs.getInt(ID)
-        			             , rs.getString(DIG_DIENSTGRAD));
+        						 , new RankedElement(rs.getString(DIG_DIENSTGRAD), rs.getInt(POS)));
         }
         rs.close();
 		return Dienstgrade;

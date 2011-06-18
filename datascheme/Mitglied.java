@@ -74,7 +74,7 @@ public class Mitglied {
 	 * @return
 	 */
 	public String getDienstgrad() {
-		return GlobalData.getInstance().getDienstgrade().getElement(Dienstgrad);
+		return GlobalData.getInstance().getDienstgrade().getElementString(Dienstgrad);
 	}
 	/**
 	 * @return

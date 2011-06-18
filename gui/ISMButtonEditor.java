@@ -1,6 +1,5 @@
-package gui.generic;
+package gui;
 
-import gui.MainApplicationWindow;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -12,9 +11,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import data.GlobalData;
+import datascheme.IdStringMatcher;
 
-public class ButtonEditor extends DefaultCellEditor {
+public class ISMButtonEditor extends DefaultCellEditor {
 	  /**
 	 * 
 	 */
@@ -23,20 +22,22 @@ public class ButtonEditor extends DefaultCellEditor {
 	protected JButton button;
 	  private String    label;
 	  private boolean   isPushed;
+	  private IdStringMatcher ism;
 
-	  public ButtonEditor(JCheckBox checkBox) {
+	  public ISMButtonEditor(JCheckBox checkBox, IdStringMatcher tism) {
 	    super(checkBox);
+	    ism = tism;
 	    button = new JButton();
 	    button.setOpaque(true);
 	    button.addActionListener(new ActionListener() {
 	      public void actionPerformed(ActionEvent e) {
 	    	  int n = JOptionPane.showConfirmDialog(MainApplicationWindow.getMainWindow().getJFrame(),
-		    		  GlobalData.getInstance().getMitglieder().get(Integer.parseInt(label)),
+		    		  ism.getElement(Integer.parseInt(label)).toString(),
 	                  "Wirklich löschen?",
 	                  JOptionPane.OK_CANCEL_OPTION,
 	                  JOptionPane.WARNING_MESSAGE);
 	          if (n == JOptionPane.YES_OPTION) {
-	        	  GlobalData.getInstance().removeMember(Integer.parseInt(label));
+	        	  ism.removeElement(Integer.parseInt(label));
 //	        	  System.out.println("Yes");
 	              //TODO: Answer was Yes
 	          } /*else if (n == JOptionPane.CANCEL_OPTION) {

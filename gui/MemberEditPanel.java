@@ -13,13 +13,14 @@ import javax.swing.JLabel;
 import data.GlobalData;
 import datascheme.IdStringMatcher;
 import datascheme.Mitglied;
+import datascheme.RankedElement;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 
-public class memberEditPanel extends JPanel {
+public class MemberEditPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lname = null;
@@ -40,7 +41,7 @@ public class memberEditPanel extends JPanel {
 	/**
 	 * This is the default constructor
 	 */
-	public memberEditPanel() {
+	public MemberEditPanel() {
 		super();
 		initialize();
 	}
@@ -58,44 +59,44 @@ public class memberEditPanel extends JPanel {
 		gridBagConstraintsAddButton.ipady = -4;
 		gridBagConstraintsAddButton.gridwidth = 6;
 		gridBagConstraintsAddButton.gridx = 0;
-		gridBagConstraintsAddButton.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsAddButton.fill = GridBagConstraints.BOTH;
 		GridBagConstraints gridBagConstraintsStatusBox = new GridBagConstraints();
-		gridBagConstraintsStatusBox.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsStatusBox.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsStatusBox.gridy = 1;
 		gridBagConstraintsStatusBox.ipadx = 98;
 		gridBagConstraintsStatusBox.ipady = -3;
 		gridBagConstraintsStatusBox.weightx = 1.0;
 		gridBagConstraintsStatusBox.gridx = 5;
 		GridBagConstraints gridBagConstraintsAufnComboBox = new GridBagConstraints();
-		gridBagConstraintsAufnComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsAufnComboBox.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsAufnComboBox.gridy = 1;
 		gridBagConstraintsAufnComboBox.ipadx = 23;
 		gridBagConstraintsAufnComboBox.ipady = 2;
 		gridBagConstraintsAufnComboBox.weightx = 1.0;
 		gridBagConstraintsAufnComboBox.gridx = 4;
 		GridBagConstraints gridBagConstraintsGebFeld = new GridBagConstraints();
-		gridBagConstraintsGebFeld.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsGebFeld.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsGebFeld.gridy = 1;
 		gridBagConstraintsGebFeld.ipadx = 36;
 		gridBagConstraintsGebFeld.ipady = 2;
 		gridBagConstraintsGebFeld.weightx = 1.0;
 		gridBagConstraintsGebFeld.gridx = 3;
 		GridBagConstraints gridBagConstraintsDGFeld = new GridBagConstraints();
-		gridBagConstraintsDGFeld.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDGFeld.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsDGFeld.gridy = 1;
 		gridBagConstraintsDGFeld.ipadx = 98;
 		gridBagConstraintsDGFeld.ipady = -3;
 		gridBagConstraintsDGFeld.weightx = 1.0;
 		gridBagConstraintsDGFeld.gridx = 2;
 		GridBagConstraints gridBagConstraintsVorNFeld = new GridBagConstraints();
-		gridBagConstraintsVorNFeld.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsVorNFeld.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsVorNFeld.gridy = 1;
 		gridBagConstraintsVorNFeld.ipadx = 70;
 		gridBagConstraintsVorNFeld.ipady = 2;
 		gridBagConstraintsVorNFeld.weightx = 1.0;
 		gridBagConstraintsVorNFeld.gridx = 1;
 		GridBagConstraints gridBagConstraintsNameFeld = new GridBagConstraints();
-		gridBagConstraintsNameFeld.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsNameFeld.fill = GridBagConstraints.BOTH;
 		gridBagConstraintsNameFeld.gridy = 1;
 		gridBagConstraintsNameFeld.ipadx = 90;
 		gridBagConstraintsNameFeld.ipady = 2;
@@ -105,31 +106,37 @@ public class memberEditPanel extends JPanel {
 		gridBagConstraintsStatusLabel.gridx = 5;
 		gridBagConstraintsStatusLabel.ipadx = 83;
 		gridBagConstraintsStatusLabel.ipady = 6;
+		gridBagConstraintsStatusLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsStatusLabel.gridy = 0;
 		GridBagConstraints gridBagConstraintsAufnLabel = new GridBagConstraints();
 		gridBagConstraintsAufnLabel.gridx = 4;
 		gridBagConstraintsAufnLabel.ipadx = 14;
 		gridBagConstraintsAufnLabel.ipady = 6;
+		gridBagConstraintsAufnLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsAufnLabel.gridy = 0;
 		GridBagConstraints gridBagConstraintsGebLabel = new GridBagConstraints();
 		gridBagConstraintsGebLabel.gridx = 3;
 		gridBagConstraintsGebLabel.ipadx = 28;
 		gridBagConstraintsGebLabel.ipady = 6;
+		gridBagConstraintsGebLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsGebLabel.gridy = 0;
 		GridBagConstraints gridBagConstraintsDGLabel = new GridBagConstraints();
 		gridBagConstraintsDGLabel.gridx = 2;
 		gridBagConstraintsDGLabel.ipadx = 51;
 		gridBagConstraintsDGLabel.ipady = 6;
+		gridBagConstraintsDGLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsDGLabel.gridy = 0;
 		GridBagConstraints gridBagConstraintsVorNLabel = new GridBagConstraints();
 		gridBagConstraintsVorNLabel.gridx = 1;
 		gridBagConstraintsVorNLabel.ipadx = 67;
 		gridBagConstraintsVorNLabel.ipady = 6;
+		gridBagConstraintsVorNLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsVorNLabel.gridy = 0;
 		GridBagConstraints gridBagConstraintsNameLabel = new GridBagConstraints();
 		gridBagConstraintsNameLabel.gridx = 0;
 		gridBagConstraintsNameLabel.ipadx = 90;
 		gridBagConstraintsNameLabel.ipady = 6;
+		gridBagConstraintsNameLabel.anchor = GridBagConstraints.NORTHWEST;
 		gridBagConstraintsNameLabel.gridy = 0;
 		this.setSize(600, 100);
 		this.setLayout(new GridBagLayout());
@@ -148,24 +155,30 @@ public class memberEditPanel extends JPanel {
 		lstatus = new JLabel("Status");
 		
 		name = new JTextField("Name");
-		name.setMinimumSize(new Dimension(50,20));
+		name.setMinimumSize(new Dimension(50,25));
 		addFocusListener(name);
 		vorName = new JTextField("Vorname");
-		vorName.setMinimumSize(new Dimension(50,20));
+		vorName.setMinimumSize(new Dimension(50,25));
 		addFocusListener(vorName);
 		dienstGrad = new JComboBox();
-		dienstGrad.setMinimumSize(new Dimension(50,20));
+		dienstGrad.setMinimumSize(new Dimension(50,25));
 		geb = new JTextField("Geburtsdatum");
-		geb.setMinimumSize(new Dimension(50,20));
+		geb.setMinimumSize(new Dimension(50,25));
 		addFocusListener(geb);
 		aufn = new JTextField("Aufnahmedatum");
-		aufn.setMinimumSize(new Dimension(50,20));
+		aufn.setMinimumSize(new Dimension(50,25));
 		addFocusListener(aufn);
 		status = new JComboBox();
-		status.setMinimumSize(new Dimension(50,20));
+		status.setMinimumSize(new Dimension(50,25));
 		
 		add = new JButton();
 		add.setText("Mitglied hinzufügen");
+		this.add(lname, gridBagConstraintsNameLabel);
+		this.add(lvorname, gridBagConstraintsVorNLabel);
+		this.add(ldg, gridBagConstraintsDGLabel);
+		this.add(lgeb, gridBagConstraintsGebLabel);
+		this.add(laufn, gridBagConstraintsAufnLabel);
+		this.add(lstatus, gridBagConstraintsStatusLabel);
 		add.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 //				System.out.println("actionPerformed()");
@@ -179,12 +192,6 @@ public class memberEditPanel extends JPanel {
 		});
 		getDienstgrade();
 		getStatus();
-		this.add(lname, gridBagConstraintsNameLabel);
-		this.add(lvorname, gridBagConstraintsVorNLabel);
-		this.add(ldg, gridBagConstraintsDGLabel);
-		this.add(lgeb, gridBagConstraintsGebLabel);
-		this.add(laufn, gridBagConstraintsAufnLabel);
-		this.add(lstatus, gridBagConstraintsStatusLabel);
 		this.add(name, gridBagConstraintsNameFeld);
 		this.add(vorName, gridBagConstraintsVorNFeld);
 		this.add(dienstGrad, gridBagConstraintsDGFeld);
@@ -219,17 +226,17 @@ public class memberEditPanel extends JPanel {
 	
 	private void getDienstgrade() {
 		IdStringMatcher Dienstgrade = data.GlobalData.getInstance().getDienstgrade();
-		Iterator<String> it = Dienstgrade.getElements().values().iterator();
+		Iterator<RankedElement> it = Dienstgrade.getElements().values().iterator();
 		while(it.hasNext()) {
-			dienstGrad.addItem(it.next());
+			dienstGrad.addItem(it.next().getName());
 		}
 	}
 	
 	private void getStatus() {
 		IdStringMatcher Status = data.GlobalData.getInstance().getMemberStatus();
-		Iterator<String> it = Status.getElements().values().iterator();
+		Iterator<RankedElement> it = Status.getElements().values().iterator();
 		while(it.hasNext()) {
-			status.addItem(it.next());
+			status.addItem(it.next().getName());
 		}
 	}
 	

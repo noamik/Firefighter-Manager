@@ -7,33 +7,41 @@ import util.util;
 
 
 public class IdStringMatcher {
-	private HashMap<Integer,String> Elements;
+	private HashMap<Integer,RankedElement> Elements;
 
     public IdStringMatcher() {
-        this.Elements = new HashMap<Integer,String>();
+        this.Elements = new HashMap<Integer,RankedElement>();
     }
 
-    public IdStringMatcher(HashMap<Integer,String> Elements) {
+    public IdStringMatcher(HashMap<Integer,RankedElement> Elements) {
 		this.Elements = Elements;
 	}
 
-    public String getElement(Integer Id) {
+    public String getElementString(Integer Id) {
+        return this.Elements.get(Id).getName();
+    }
+    
+    public Integer getElementPos(Integer Id) {
+        return this.Elements.get(Id).getPos();
+    }
+
+    public RankedElement getElement(Integer Id) {
         return this.Elements.get(Id);
     }
-
-	public void setElements(HashMap<Integer,String> Elements) {
+    
+	public void setElements(HashMap<Integer,RankedElement> Elements) {
 		this.Elements = Elements;
 	}
 
-	public HashMap<Integer,String> getElements() {
+	public HashMap<Integer,RankedElement> getElements() {
 		return Elements;
 	}
 
-    public void addElement(Integer Id, String Element) {
+    public void addElement(Integer Id, RankedElement Element) {
         this.Elements.put(Id,Element);
     }
 
-    public Integer addElement(String Element) {
+    public Integer addElement(RankedElement Element) {
         Random generator = new Random();
         int newId = generator.nextInt();
         while(this.Elements.containsKey(newId))
@@ -69,6 +77,15 @@ public class IdStringMatcher {
     public Boolean isId(Integer id) {
 		return this.Elements.containsValue(id);
 	}
+    
+    public Object[] getDBObject(Integer id) {
+    	Object[] dbe = new Object[3];
+    	RankedElement elem = this.Elements.get(id);
+    	dbe[0] = id;
+    	dbe[1] = elem.getName();
+    	dbe[0] = elem.getPos();
+    	return dbe;
+    }
 
     public String toString() {
         String result = null;

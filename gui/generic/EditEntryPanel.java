@@ -15,7 +15,8 @@ public class EditEntryPanel {
 	private JPanel editPanel 			= null;
 	private JScrollPane tableScroller 	= null;
 	
-	private String Name;
+	private String name;
+	private String tableName;
 	private JTable table;
 	private JPanel edit;
 	
@@ -26,10 +27,11 @@ public class EditEntryPanel {
 	 * @param table
 	 * @param edit
 	 */
-	public EditEntryPanel(String Name, JTable table, JPanel edit) {
-		this.Name 	= Name;
+	public EditEntryPanel(String Name, String TableName, JTable table, JPanel edit) {
+		this.name 	= Name;
 		this.table 	= table;
 		this.edit 	= edit;
+		this.tableName = TableName;
 		initialize();
 	}
 	
@@ -49,11 +51,11 @@ public class EditEntryPanel {
 		basePanel 		= new JPanel();
 		basePanel.setLayout(new GridLayout(0,1));
 		basePanel.setLayout(new GridBagLayout());
-		basePanel 		= GUIHelper.addBorder(basePanel, Name);
+		basePanel 		= GUIHelper.addBorder(basePanel, name);
 		editableTable 	= table;
 		editPanel 		= edit;
 		tableScroller 	= new JScrollPane(editableTable);
-		tableScroller   = GUIHelper.addBorder(tableScroller, "Mitgliedertabelle");
+		tableScroller   = GUIHelper.addBorder(tableScroller, tableName);
 		basePanel.add(tableScroller, tableConstr);
 		basePanel.add(editPanel, editPanelConstr);
 	}

@@ -38,7 +38,7 @@ private HashMap<Integer, Date> Dienstgrade = null;
         int counter = 0;
         while(i.hasNext()) {
             counter = (Integer)i.next();
-            result = result + "Dienstgrad: " + GlobalData.getInstance().getDienstgrade().getElement(counter)
+            result = result + "Dienstgrad: " + GlobalData.getInstance().getDienstgrade().getElementString(counter)
                      + " befördert am: " + util.DateToString(this.Dienstgrade.get(counter))
                      + util.NewLine;
         }

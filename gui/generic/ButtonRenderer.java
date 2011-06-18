@@ -35,7 +35,7 @@ public class ButtonRenderer extends JButton implements TableCellRenderer {
 	      setBackground(UIManager.getColor("Button.background"));
 	    }
 	    setText( "X"/*(value ==null) ? "" : value.toString()*/ );
-	    setToolTipText("Click löscht Mitglied");
+	    setToolTipText("Click löscht Eintrag");
 	    return this;
 	  }
 }

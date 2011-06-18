@@ -1,6 +1,5 @@
 package gui;
 
-import gui.generic.ButtonEditor;
 import gui.generic.ButtonRenderer;
 import gui.generic.GenericTable;
 import gui.generic.RowIndexRenderer;
@@ -24,6 +23,7 @@ import util.util;
 
 import data.GlobalData;
 import datascheme.Mitglied;
+import datascheme.RankedElement;
 
 public class MemberTable implements TableModelListener {
 	private JTable memberTable		= null;
@@ -106,10 +106,10 @@ public class MemberTable implements TableModelListener {
 			MemberTableObject[i][0] = i;
 			MemberTableObject[i][1] = temp.getName();
 			MemberTableObject[i][2] = temp.getVorname();
-			MemberTableObject[i][3] = gd.getDienstgrade().getElement(temp.getDienstgradId());
+			MemberTableObject[i][3] = gd.getDienstgrade().getElementString(temp.getDienstgradId());
 			MemberTableObject[i][4] = util.DateToString(temp.getGeburtsdatum());
 			MemberTableObject[i][5] = util.DateToString(temp.getAufnahmedatum());
-			MemberTableObject[i][6] = gd.getMemberStatus().getElement(temp.getStatus());
+			MemberTableObject[i][6] = gd.getMemberStatus().getElementString(temp.getStatus());
 			MemberTableObject[i][7] = temp.getId();
 		}
 		return MemberTableObject;
@@ -126,7 +126,7 @@ public class MemberTable implements TableModelListener {
 	
 	private void replaceColumnWithButton(TableColumn dgc) {
 		dgc.setCellRenderer(new ButtonRenderer());
-	    dgc.setCellEditor(new ButtonEditor(new JCheckBox()));
+	    dgc.setCellEditor(new MemberButtonEditor(new JCheckBox()));
 	}
 	
 	private void replaceFirstColumnCellRenderer(TableColumn dgc) {
@@ -134,17 +134,17 @@ public class MemberTable implements TableModelListener {
 	}
 	
 	private void updateDienstgradeComboBox() {
-		Iterator<String> it = gd.getDienstgrade().getElements().values().iterator();
+		Iterator<RankedElement> it = gd.getDienstgrade().getElements().values().iterator();
 		Dienstgrade = new JComboBox();
 		while(it.hasNext())
-			Dienstgrade.addItem(it.next());
+			Dienstgrade.addItem(it.next().getName());
 	}
 	
 	private void updateStatusComboBox() {
-		Iterator<String> it = gd.getMemberStatus().getElements().values().iterator();
+		Iterator<RankedElement> it = gd.getMemberStatus().getElements().values().iterator();
 		Status = new JComboBox();
 		while(it.hasNext())
-			Status.addItem(it.next());
+			Status.addItem(it.next().getName());
 	}
 
 	/**
@@ -173,12 +173,9 @@ public class MemberTable implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent arg0) {
-		// TODO Auto-generated method stub
-//		memberTable.addNotify();
 		Integer col = arg0.getColumn();
-		System.out.println("Table changed: FirstRow:"+arg0.getFirstRow() + " Col:"+col);
+//		System.out.println("Table changed: FirstRow:"+arg0.getFirstRow() + " Col:"+col);
 		if(col != -1 && col != 7) {
-			System.out.println("Value: " + gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1));
 			Mitglied member = GlobalData.getInstance().getMitglieder().get(gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1));
 			Object item = gmt.getValueAt(arg0.getFirstRow(), col);
 			switch(col) {
@@ -191,7 +188,6 @@ public class MemberTable implements TableModelListener {
 			}
 			GlobalData.getInstance().addMember(member);
 		}
-		//TODO: hier dann die Änderung in die DB und GlobalData schreiben
 //		printTableToConsole();
 	}
 	

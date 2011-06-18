@@ -58,6 +58,8 @@ public class GenericTable extends AbstractTableModel {
 	}
 	
 	public void setColumnEditable(int colNumber, Boolean init) {
+		if(editable == null)
+			return;
 		for(int i=0; i<editable.length;i++)
 			editable[i][colNumber] = init;
 	}
