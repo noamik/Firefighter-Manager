@@ -3,7 +3,6 @@
  */
 package gui;
 
-import gui.generic.EditEntryPanel;
 import gui.generic.GUIHelper;
 
 import java.awt.GridBagConstraints;

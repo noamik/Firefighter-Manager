@@ -50,9 +50,12 @@ public class RankedElemsTable implements TableModelListener {
 		if(data == null)
 			return -1;
 		Integer max = -1;
-		for(int i=0;i<data.length;i++)
+		for(int i=0;i<data.length;i++) {
+			System.out.println("Current max: " + max + " checking now: " + data[i][titles.length-1]);
+//			if(data[i][titles.length-1].getClass().isInstance(new Integer()))
 			if((Integer)data[i][titles.length-1]>max)
 				max = (Integer)data[i][titles.length-1];
+		}
 		return max;
 	}
 	
