@@ -18,6 +18,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 
+import data.GlobalData;
 import datascheme.IdStringMatcher;
 import datascheme.RankedElement;
 
@@ -158,7 +159,7 @@ public class RankedElemsTable implements TableModelListener {
 		Integer col = arg0.getColumn();
 		System.out.println("Table changed: FirstRow:"+arg0.getFirstRow() + " Col:"+col);
 		if(col != -1 && col != 3) {
-			Integer id = Integer.parseInt((String) gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1));
+			Integer id = (Integer) gmt.getValueAt(arg0.getFirstRow(), gmt.getColumnCount()-1);
 			RankedElement elem = ism.getElement(id);
 			Object item = gmt.getValueAt(arg0.getFirstRow(), col);
 			switch(col) {
@@ -166,6 +167,12 @@ public class RankedElemsTable implements TableModelListener {
 				case 2: elem.setPos(Integer.parseInt((String)item)); break;
 			}
 			ism.addElement(id, elem);
+			if(titles[1].equalsIgnoreCase("Ausbildung"))
+      			GlobalData.getInstance().addTraining(id,elem);
+      		if(titles[1].equalsIgnoreCase("Dienstgrade"))
+      			GlobalData.getInstance().addRank(id,elem);
+      		if(titles[1].equalsIgnoreCase("Status"))
+      			GlobalData.getInstance().addStatus(id,elem);
 		}
 //		printTableToConsole();
 	}

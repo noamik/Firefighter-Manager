@@ -105,6 +105,7 @@ public class MainApplicationWindow {
 	private JTabbedPane getTabbedPane() {
 		tabbedMainPane = new JTabbedPane();
         tabbedMainPane.addTab("Mitgliederverwaltung", getMemberPane());
+        tabbedMainPane.addTab("Mitgliederausbildungen", new JPanel());
         tabbedMainPane.addTab("Einstellungen", getTestPane());
         return tabbedMainPane;
 	}
