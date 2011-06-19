@@ -25,10 +25,10 @@ public class RankedElementsSettingsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 //	private EditEntryPanel basePanel = null;
-	private RankedElemsTable table = null;
+	private RankedElemsTable table = null;  //  @jve:decl-index=0:
 	private String name = null;
 	
-	private JTable editableTable 		= null;
+//	private JTable editableTable 		= null;
 	private JPanel basePanel 			= null;
 	private JPanel editPanel 			= null;
 	private JScrollPane tableScroller 	= null;
@@ -106,10 +106,9 @@ public class RankedElementsSettingsPanel extends JPanel {
 			table = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getDienstgrade());
 		if(name.equalsIgnoreCase("Status"))
 			table = new RankedElemsTable(new String[]{"Nr.", name, "Pos", ""}, GlobalData.getInstance().getMemberStatus());
-		editableTable 	= table.getTable();
+//		editableTable 	= table.getTable();
 		editPanel 		= new RankedElementsEditPanel(table.getIdStringMatcher(), name, table);
-		tableScroller 	= new JScrollPane(editableTable);
-		tableScroller   = GUIHelper.addBorder(tableScroller, null);
+		tableScroller 	= new JScrollPane(table.getTable());
 		basePanel.add(tableScroller, tableConstr);
 		basePanel.add(editPanel, editPanelConstr);
 		return basePanel;

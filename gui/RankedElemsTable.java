@@ -86,6 +86,13 @@ public class RankedElemsTable implements TableModelListener {
 	/**
 	 * @return
 	 */
+	public IdStringMatcher getISM() {
+		return ism;
+	}
+	
+	/**
+	 * @return
+	 */
 	public JTable getTable() {
 		return this.rankedElemsTable;
 	}

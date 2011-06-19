@@ -51,12 +51,13 @@ public class IdStringMatcher {
     }
 
     public void removeElement(Integer id) {
-         this.Elements.remove(this.Elements.get(id));
+        this.Elements.remove(id);
     }
 
-    public void removeElement(String Element) {
-         this.Elements.remove(Element);
-    }
+//    public void removeElement(String Element) {
+//    	System.out.println("Remove Element by Value");
+//         this.Elements.remove(Element);
+//    }
 
     /** Returns -1 if Element not found */
     public Integer getId(String Element) {

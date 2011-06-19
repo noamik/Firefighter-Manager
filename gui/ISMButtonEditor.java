@@ -38,6 +38,7 @@ public class ISMButtonEditor extends DefaultCellEditor {
 		  button.setOpaque(true);
 		  button.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
+				  fireEditingStopped();
 		    	  Integer id = Integer.parseInt(label);
 		    	  int n = JOptionPane.showConfirmDialog(MainApplicationWindow.getMainWindow().getJFrame(),
 			    		  ism.getElement(id).toString(),
@@ -51,17 +52,14 @@ public class ISMButtonEditor extends DefaultCellEditor {
 		      			GlobalData.getInstance().removeRank(id);
 		      		if(name.equalsIgnoreCase("Status"))
 		      			GlobalData.getInstance().removeStatus(id);
-//		        	  ism.removeElement(Integer.parseInt(label));
-//		        	  System.out.println("Yes");
-		              //TODO: Answer was Yes
+		              // Answer was Ok
 		          } /*else if (n == JOptionPane.CANCEL_OPTION) {
-		              //TODO: Answer was Yes
+		              // Answer was Cancel
 		        	  System.out.println("Cancel");
 		          } else {
-		              //TODO: Clicked X
+		              //Clicked X
 		        	  System.out.println("X");
 		          }*/
-		        fireEditingStopped();
 		      }
 		    });
 	  }
