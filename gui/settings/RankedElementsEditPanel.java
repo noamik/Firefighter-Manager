@@ -97,13 +97,13 @@ public class RankedElementsEditPanel extends JPanel {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				RankedElement elem = new RankedElement(item.getText(),Integer.parseInt(position.getText()));
 				if(name.equals("Ausbildung")) {
-					GlobalData.getInstance().addTraining(gt.getMaxId()+1, elem);
+					GlobalData.getInstance().addTraining(GlobalData.getInstance().getLehrgänge().getMaxId()+1, elem);
 				}
 				if(name.equals("Dienstgrade")) {
-					GlobalData.getInstance().addRank(gt.getMaxId()+1, elem);
+					GlobalData.getInstance().addRank(GlobalData.getInstance().getDienstgrade().getMaxId()+1, elem);
 				}
 				if(name.equals("Status")) {
-					GlobalData.getInstance().addStatus(gt.getMaxId()+1, elem);
+					GlobalData.getInstance().addStatus(GlobalData.getInstance().getMemberStatus().getMaxId()+1, elem);
 				}
 				gt.getGenericTable().setData(gt.createTableArray(ism));
 				gt.getGenericTable().fireTableDataChanged();

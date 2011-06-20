@@ -44,7 +44,7 @@ public class Start {
 			else
 				LF = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(LF);
-			System.out.println("OSname="+OSname + " - Setting L&F: " + LF + " - System-L&F:"+UIManager.getSystemLookAndFeelClassName());
+			System.out.println("OSname="+OSname + " - Setting L&F: " + LF + " - System-L&F: "+UIManager.getSystemLookAndFeelClassName());
 	    }
 	    catch (UnsupportedLookAndFeelException e) {System.out.println("L&F not supported");}
 	    catch (ClassNotFoundException e) {System.out.println("L&F not found");}

@@ -3,6 +3,7 @@ package gui;
 import gui.generic.EditEntryPanel;
 import gui.membertab.MemberEditPanel;
 import gui.membertab.MemberTable;
+import gui.membertrainingtab.MemberTrainingsPanel;
 import gui.settings.RankedElementsSettingsPanel;
 
 import java.awt.event.KeyEvent;
@@ -64,6 +65,8 @@ public class MainApplicationWindow {
 	private RankedElementsSettingsPanel tsp = null;
 	private RankedElementsSettingsPanel rsp = null;
 	private RankedElementsSettingsPanel ssp = null;
+	
+	private MemberTrainingsPanel mtt = null;
 
 	private MainApplicationWindow() {
 	}
@@ -115,10 +118,15 @@ public class MainApplicationWindow {
 				System.out.println("Creating Tabbed Pane");
 			tabbedMainPane = new JTabbedPane();
         	tabbedMainPane.addTab("Mitgliederverwaltung", getMemberPane());
-        	tabbedMainPane.addTab("Mitgliederausbildungen", new JPanel());
+        	tabbedMainPane.addTab("Mitgliederausbildungen", getMemberTrainingsPane());
         	tabbedMainPane.addTab("Einstellungen", getTestPane());
 		}
         return tabbedMainPane;
+	}
+	
+	private JPanel getMemberTrainingsPane() {
+		mtt = new MemberTrainingsPanel();
+		return (JPanel)mtt;
 	}
 	
 	private JPanel getTestPane() {

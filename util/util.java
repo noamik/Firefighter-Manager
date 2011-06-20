@@ -10,6 +10,7 @@ public class util {
     public static Boolean DebugMainWindow = false;
     public static Boolean DebugMemberPane = false;
     public static Boolean DebugSQLQueries = false;
+    public static Boolean DebugMemberTrainings = true;
  // SimpleDateFormat formatter = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
     public static String DateToString(Date date) {
     	if(date == null)

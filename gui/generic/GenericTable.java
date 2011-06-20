@@ -98,6 +98,8 @@ public class GenericTable extends AbstractTableModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public Class getColumnClass(int c) {
+		if(getValueAt(0, c) == null)
+			return (new String()).getClass();
 		return getValueAt(0, c).getClass();
 	}
 

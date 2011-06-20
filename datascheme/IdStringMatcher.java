@@ -52,6 +52,18 @@ public class IdStringMatcher {
         this.Elements.put(newId,Element);
         return newId;
     }
+    
+    public Integer getMaxId() {
+    	Integer i = 0;
+    	Integer t = 0;
+    	Iterator<Integer> it = Elements.keySet().iterator();
+    	while(it.hasNext()) {
+    		t = it.next();
+    		if(i<t)
+    			i=t;
+    	}
+    	return i;
+    }
 
     public void removeElement(Integer id) {
         this.Elements.remove(id);

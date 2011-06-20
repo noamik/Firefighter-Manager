@@ -47,19 +47,6 @@ public class RankedElemsTable implements TableModelListener {
 		return ism;
 	}
 	
-	public Integer getMaxId() {
-		if(data == null)
-			return -1;
-		Integer max = -1;
-		for(int i=0;i<data.length;i++) {
-			System.out.println("Current max: " + max + " checking now: " + data[i][titles.length-1]);
-//			if(data[i][titles.length-1].getClass().isInstance(new Integer()))
-			if((Integer)data[i][titles.length-1]>max)
-				max = (Integer)data[i][titles.length-1];
-		}
-		return max;
-	}
-	
 	private void initialize() {
 //		System.out.println("MemberTable-GD-toString:" +gd.toString());
 		data   = createTableArray(ism);
@@ -164,7 +151,7 @@ public class RankedElemsTable implements TableModelListener {
 			Object item = gmt.getValueAt(arg0.getFirstRow(), col);
 			switch(col) {
 				case 1: elem.setName((String)item); break;
-				case 2: elem.setPos(Integer.parseInt((String)item)); break;
+				case 2: elem.setPos((Integer)item); break;
 			}
 			ism.addElement(id, elem);
 			if(titles[1].equalsIgnoreCase("Ausbildung"))
