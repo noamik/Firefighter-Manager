@@ -1,6 +1,9 @@
 package gui;
 
 import gui.generic.EditEntryPanel;
+import gui.membertab.MemberEditPanel;
+import gui.membertab.MemberTable;
+import gui.settings.RankedElementsSettingsPanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui;
+package gui.settings;
 
 import gui.generic.ButtonRenderer;
 import gui.generic.GenericTable;

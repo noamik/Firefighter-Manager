@@ -1,5 +1,7 @@
-package gui;
+package gui.settings;
 
+
+import gui.MainApplicationWindow;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

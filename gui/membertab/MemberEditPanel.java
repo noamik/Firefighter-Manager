@@ -1,4 +1,4 @@
-package gui;
+package gui.membertab;
 
 import java.awt.Dimension;
 import java.util.Iterator;

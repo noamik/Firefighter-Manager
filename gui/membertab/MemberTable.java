@@ -1,4 +1,4 @@
-package gui;
+package gui.membertab;
 
 import gui.generic.ButtonRenderer;
 import gui.generic.GenericTable;

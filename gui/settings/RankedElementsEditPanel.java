@@ -1,4 +1,5 @@
-package gui;
+package gui.settings;
+
 
 
 import java.awt.Dimension;
