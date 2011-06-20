@@ -18,6 +18,9 @@ public class IdStringMatcher {
 	}
 
     public String getElementString(Integer Id) {
+    	RankedElement temp = this.Elements.get(Id);
+    	if(temp == null)
+    		return "Element does not exist";
         return this.Elements.get(Id).getName();
     }
     
@@ -65,7 +68,7 @@ public class IdStringMatcher {
         int counter = 0;
         while(i.hasNext()) {
             counter = (Integer)i.next();
-            if(this.Elements.get(counter).equals(Element))
+            if(this.Elements.get(counter).getName().equals(Element))
                 return counter;
         }
         return -1;

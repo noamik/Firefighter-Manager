@@ -76,6 +76,8 @@ public class MainApplicationWindow {
 	 */
 	public JFrame getJFrame() {
 		if (jFrame == null) {
+			if(util.util.DebugMainWindow)
+				System.out.println("Creating Main Frame");
 			jFrame = new JFrame();
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(getJJMenuBar());
@@ -95,6 +97,8 @@ public class MainApplicationWindow {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			if(util.util.DebugMainWindow)
+				System.out.println("Creating Content Frame");
 			jContentPane = new JPanel();
         	jContentPane.setLayout(new GridLayout(0,1));
         	jContentPane.add(getTabbedPane());
@@ -103,10 +107,14 @@ public class MainApplicationWindow {
 	}
 	
 	private JTabbedPane getTabbedPane() {
-		tabbedMainPane = new JTabbedPane();
-        tabbedMainPane.addTab("Mitgliederverwaltung", getMemberPane());
-        tabbedMainPane.addTab("Mitgliederausbildungen", new JPanel());
-        tabbedMainPane.addTab("Einstellungen", getTestPane());
+		if(tabbedMainPane == null) {
+			if(util.util.DebugMainWindow)
+				System.out.println("Creating Tabbed Pane");
+			tabbedMainPane = new JTabbedPane();
+        	tabbedMainPane.addTab("Mitgliederverwaltung", getMemberPane());
+        	tabbedMainPane.addTab("Mitgliederausbildungen", new JPanel());
+        	tabbedMainPane.addTab("Einstellungen", getTestPane());
+		}
         return tabbedMainPane;
 	}
 	
@@ -170,6 +178,8 @@ public class MainApplicationWindow {
 	 */
 	private JPanel getMemberPane() {
 		final JPanel panel2 = new JPanel();
+		if(util.util.DebugMainWindow)
+			System.out.println("Creating Member Pane");
         panel2.setLayout(new GridLayout(0,1));
         memberTablePanel = initMemberJPanel();
         panel2.add(memberTablePanel.getPanel());
@@ -182,10 +192,14 @@ public class MainApplicationWindow {
 	 * @return javax.swing.JScrollPane	
 	 */
 	private EditEntryPanel initMemberJPanel() {
+		if(util.util.DebugMainWindow)
+			System.out.println("Initializing Member Pane");
 		return new EditEntryPanel(null,null/*"Mitgliedertabelle"*/,getJMemberTable(),new MemberEditPanel());
 	}
 	
 	private JTable getJMemberTable() {
+		if(util.util.DebugMainWindow)
+			System.out.println("Creating Tabbed Pane");
 		memberTable = initMemberTable().getTable();
 		return memberTable;
 	}
@@ -197,6 +211,8 @@ public class MainApplicationWindow {
 	
 	
 	private MemberTable initMemberTable() {
+		if(util.util.DebugMemberPane)
+			System.out.println("Creating Member Table");
 		mt = new MemberTable();
 		return mt;
 	}

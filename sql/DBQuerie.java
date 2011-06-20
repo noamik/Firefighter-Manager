@@ -86,12 +86,16 @@ public class DBQuerie {
 	 * @throws SQLException
 	 */
 	public datascheme.IdStringMatcher getTrainings() throws SQLException {
+		if(util.util.DebugSQLQueries) 
+			System.out.println("getTraining():");
 		IdStringMatcher Lehrgänge = new IdStringMatcher();
 		Statement  st = cn.createStatement();
         ResultSet  rs = st.executeQuery( GET_TRAININGS );
         while (rs.next()) {
         	Lehrgänge.addElement(rs.getInt(ID)
         			           , new RankedElement(rs.getString(AUS_Ausbildung), rs.getInt(POS)));
+        	if(util.util.DebugSQLQueries)
+        		System.out.println("getTraining(): Adding Training: " + rs.getString(AUS_Ausbildung) + " Pos:" + rs.getInt(POS));
         }
         rs.close();
 		return Lehrgänge;
@@ -102,12 +106,16 @@ public class DBQuerie {
 	 * @throws SQLException
 	 */
 	public datascheme.IdStringMatcher getMemberStatusHashMap() throws SQLException {
+		if(util.util.DebugSQLQueries)
+    		System.out.println("getMemberStatusHashMap():");
 		IdStringMatcher MemberStatus = new IdStringMatcher();
 		Statement  st = cn.createStatement();
         ResultSet  rs = st.executeQuery( GET_MEMBERSTATUS );
         while (rs.next()) {
         	MemberStatus.addElement(rs.getInt(ID)
         							, new RankedElement(rs.getString(MS_STATUS), rs.getInt(POS)));
+        	if(util.util.DebugSQLQueries)
+        		System.out.println("getMemberStatusHashMap(): Adding Status: " + rs.getString(MS_STATUS) + " Pos:" + rs.getInt(POS));
         }
         rs.close();
 		return MemberStatus;
@@ -118,12 +126,16 @@ public class DBQuerie {
 	 * @throws SQLException
 	 */
 	public datascheme.IdStringMatcher getDienstgrade() throws SQLException {
+		if(util.util.DebugSQLQueries)
+    		System.out.println("getDienstgrade():");
 		IdStringMatcher Dienstgrade = new IdStringMatcher();
 		Statement  st = cn.createStatement();
         ResultSet  rs = st.executeQuery( GET_DIENSTGRADE );
         while (rs.next()) {
         	Dienstgrade.addElement(rs.getInt(ID)
         						 , new RankedElement(rs.getString(DIG_DIENSTGRAD), rs.getInt(POS)));
+        	if(util.util.DebugSQLQueries)
+        		System.out.println("getDienstgrade(): Adding Rank: " + rs.getString(DIG_DIENSTGRAD) + " Pos:" + rs.getInt(POS));
         }
         rs.close();
 		return Dienstgrade;
@@ -133,7 +145,9 @@ public class DBQuerie {
 	 * @return
 	 * @throws SQLException
 	 */
-	public HashMap<Integer,Mitglied> getMemberHashMap() throws SQLException {		
+	public HashMap<Integer,Mitglied> getMemberHashMap() throws SQLException {
+		if(util.util.DebugSQLQueries)
+    		System.out.println("getMemberHashMap():");
 		Statement  st = cn.createStatement();
         ResultSet  rs = st.executeQuery( GET_MEMBER_LIST );
         HashMap<Integer,Mitglied> Mitglieder = new HashMap<Integer,Mitglied>();
@@ -164,7 +178,8 @@ public class DBQuerie {
         			                ausb,
         			                karr,
         			                rs.getInt(MS_STATUS));
-//        	System.out.println("New Member: " + Mitglied.toString());
+        	if(util.util.DebugSQLQueries)
+        		System.out.println("getMemberHashMap(): Add Member: " + Mitglied.toString());
             Mitglieder.put(rs.getInt(ID),Mitglied);
         }
         rs.close();

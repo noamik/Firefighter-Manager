@@ -49,6 +49,8 @@ public class MemberTable implements TableModelListener {
 	}
 	
 	private void initialize() {
+		if(util.DebugMemberPane)
+			System.out.println("Initializing Member Table");
 		gd     = GlobalData.getInstance();
 //		System.out.println("MemberTable-GD-toString:" +gd.toString());
 		titles = new String[]{"Nr.", "Name", "Vorname", "Dienstgrad", "Geburtsdatum", "Aufnahmedatum", "Status", ""};
@@ -93,8 +95,18 @@ public class MemberTable implements TableModelListener {
 	 * @return
 	 */
 	public Object[][] createMemberTableArray(HashMap<Integer,Mitglied> Mitglieder) {
-		if(Mitglieder.size() == 0)
+		if(util.DebugMemberPane)
+			System.out.println("Creating Member Table Array");
+		if(Mitglieder == null) {
+			if(util.DebugMemberPane)
+				System.out.println("Member Map null");
 			return null;
+		}
+		if(Mitglieder.size() == 0) {
+			if(util.DebugMemberPane)
+				System.out.println("Member Map empty");
+			return null;
+		}
 		updateDienstgradeComboBox();
 		updateStatusComboBox();
 		Object[][] MemberTableObject = new Object[Mitglieder.size()][titles.length];
