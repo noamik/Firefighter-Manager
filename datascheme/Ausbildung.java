@@ -25,6 +25,10 @@ public class Ausbildung {
     public void addLehrgang(Lehrgang lehrgang) {
         this.Lehrgänge.put(lehrgang.getId(),lehrgang.getDatum());
     }
+    
+    public void removeLehrgang(Integer Id) {
+    	Lehrgänge.remove(Id);
+    }
 	
 	public HashMap<Integer, Date> getLehrgänge() {
 		return Lehrgänge;

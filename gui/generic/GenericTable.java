@@ -36,6 +36,17 @@ public class GenericTable extends AbstractTableModel {
 			setRowEditable(i,Boolean.TRUE);
 	}
 	
+	public void updateTableStructure(String[] titles, Object[][] data) {
+		this.columnNames = titles;
+		this.data = data;
+		if(data == null || titles == null)
+			return;
+		this.editable = new Boolean[data.length][titles.length];
+		for(int i=0; i<editable.length;i++)
+			setRowEditable(i,Boolean.TRUE);
+		this.fireTableStructureChanged();
+	}
+	
 	public void addRow(Object[] newRow) {
 		Object[][] newdata = new Object[getRowCount()+1][getColumnCount()];
 		if(data != null)

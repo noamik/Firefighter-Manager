@@ -118,15 +118,19 @@ public class MainApplicationWindow {
 				System.out.println("Creating Tabbed Pane");
 			tabbedMainPane = new JTabbedPane();
         	tabbedMainPane.addTab("Mitgliederverwaltung", getMemberPane());
-        	tabbedMainPane.addTab("Mitgliederausbildungen", getMemberTrainingsPane());
+        	tabbedMainPane.addTab("Mitgliederausbildungen", initMemberTrainingsPane());
         	tabbedMainPane.addTab("Einstellungen", getTestPane());
 		}
         return tabbedMainPane;
 	}
 	
-	private JPanel getMemberTrainingsPane() {
+	private JPanel initMemberTrainingsPane() {
 		mtt = new MemberTrainingsPanel();
 		return (JPanel)mtt;
+	}
+	
+	public MemberTrainingsPanel getMemberTrainingsPane() {
+		return mtt;
 	}
 	
 	private JPanel getTestPane() {
@@ -365,7 +369,7 @@ public class MainApplicationWindow {
 	private JLabel getAboutVersionLabel() {
 		if (aboutVersionLabel == null) {
 			aboutVersionLabel = new JLabel();
-			aboutVersionLabel.setText("FF-Verwaltung Version 0.0.1");
+			aboutVersionLabel.setText("FF-Verwaltung Version 0.0.2");
 			aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return aboutVersionLabel;

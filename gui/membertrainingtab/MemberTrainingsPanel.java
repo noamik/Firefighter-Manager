@@ -12,14 +12,20 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
+
+import util.util;
 
 import data.GlobalData;
 import datascheme.Ausbildung;
+import datascheme.Lehrgang;
 import datascheme.Mitglied;
 import datascheme.RankedElement;
 
 import java.awt.GridBagConstraints;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -27,7 +33,7 @@ import java.util.Iterator;
  * @author noamik
  *
  */
-public class MemberTrainingsPanel extends JPanel {
+public class MemberTrainingsPanel extends JPanel implements TableModelListener {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane jScrollPane = null;
@@ -81,24 +87,31 @@ public class MemberTrainingsPanel extends JPanel {
 	 * @return javax.swing.JTable	
 	 */
 	private JTable getJTable() {
-		gt = new GenericTable(updateTitles(),updateData());
+		gt = new GenericTable(createTitles(),createData());
 		if (jTable == null) {
+//			jTable = new JTable(gt);
 			jTable = new FixedJTable(gt);
-			jTable.setPreferredScrollableViewportSize(new Dimension(740, 450));
-			jTable.setFillsViewportHeight(true);
-			jTable.setAutoCreateRowSorter(true);
-//			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			jTable.getColumnModel().getColumn(0).setMaxWidth(25);
-			for(int i=1;i<titles.length;i++)
-				jTable.getColumnModel().getColumn(i).setMinWidth(75);
-			replaceFirstColumnCellRenderer(jTable.getColumnModel().getColumn(0));
-//			jTable.setMinimumSize(new Dimension((titles.length-1)*75+25,450));
+			configureJTable();
 		}
 		return jTable;
 	}
 	
-	public Object[][] updateData() {
-		if(util.util.DebugMemberTrainings)
+	private void configureJTable() {
+		jTable.getModel().addTableModelListener(this);
+		jTable.setPreferredScrollableViewportSize(new Dimension(740, 450));
+		jTable.setFillsViewportHeight(true);
+		jTable.setAutoCreateRowSorter(true);
+//		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		jTable.getColumnModel().getColumn(0).setMaxWidth(25);
+		for(int i=1;i<titles.length;i++)
+			jTable.getColumnModel().getColumn(i).setMinWidth(75);
+		replaceFirstColumnCellRenderer(jTable.getColumnModel().getColumn(0));
+//		jTable.setMinimumSize(new Dimension((titles.length-1)*75+25,450));
+		gt.setColumnEditable(0, false);
+	}
+	
+	private Object[][] createData() {
+		if(util.DebugMemberTrainings)
 			System.out.println("updateData:");
 		HashMap<Integer,Mitglied> mitglieder = gd.getMitglieder();
 		Object[][] data = new Object[mitglieder.size()][titles.length];
@@ -110,17 +123,18 @@ public class MemberTrainingsPanel extends JPanel {
 		while(it.hasNext()) {
 			i++;
 			temp = it.next();
-			if(util.util.DebugMemberTrainings)
+			if(util.DebugMemberTrainings)
 				System.out.println("updateData:" + temp.getName());
 			tempa = temp.getAusbildung();
+			data[i][0] = temp.getId();
 			data[i][1] = temp.getName();
 			data[i][2] = temp.getVorname();
 			for(int j=3;j<titles.length;j++) {
 				id = gd.getLehrgänge().getId(titles[j]);
 				if(tempa.getLehrgänge().containsKey(id)) {
-					if(util.util.DebugMemberTrainings) 
-						System.out.println("updateData: " + titles[j] + " - " + util.util.DateToString(tempa.getLehrgänge().get(id)));
-					data[i][j] = util.util.DateToString(tempa.getLehrgänge().get(id));
+					if(util.DebugMemberTrainings) 
+						System.out.println("updateData: " + titles[j] + " - " + util.DateToString(tempa.getLehrgänge().get(id)));
+					data[i][j] = util.DateToString(tempa.getLehrgänge().get(id));
 				} else {
 					data[i][j] = "";
 				}
@@ -130,8 +144,28 @@ public class MemberTrainingsPanel extends JPanel {
 		return data;
 	}
 	
-	public String[] updateTitles() {
-		if(util.util.DebugMemberTrainings)
+	public void updateTableData() {
+		Object[][] data = createData();
+		gt.setData(data);
+		gt.setColumnEditable(0, false);
+		gt.fireTableDataChanged();
+	}
+	
+	private void updateTableTitles() {
+		createTitles();
+		gt.updateTableStructure(titles,createData());
+//		jTable = new FixedJTable(gt);
+//		configureJTable();
+//		gt.fireTableStructureChanged();
+//		jTable.repaint();
+	}
+	
+	public void updateTable() {
+		updateTableTitles();
+	}
+	
+	private String[] createTitles() {
+		if(util.DebugMemberTrainings)
 			System.out.println("updateTitles:");
 		HashMap<Integer, RankedElement> hs = gd.getLehrgänge().getElements();
 		Iterator<RankedElement> it = hs.values().iterator();
@@ -144,7 +178,7 @@ public class MemberTrainingsPanel extends JPanel {
 		while(it.hasNext()) {
 			i++;
 			temp = it.next();
-			if(util.util.DebugMemberTrainings)
+			if(util.DebugMemberTrainings)
 				System.out.println("updateTitles: " + temp.getName());
 			titles[i] = temp.getName();  
 		}
@@ -153,6 +187,27 @@ public class MemberTrainingsPanel extends JPanel {
 	
 	private void replaceFirstColumnCellRenderer(TableColumn dgc) {
 		dgc.setCellRenderer(new RowIndexRenderer());
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.swing.event.TableModelListener#tableChanged(javax.swing.event.TableModelEvent)
+	 */
+	@Override
+	public void tableChanged(TableModelEvent arg0) {
+		if(arg0.getColumn() == -1 || arg0.getFirstRow() == -1)
+			return;
+		Integer col = arg0.getColumn();
+		Integer id = (Integer)gt.getValueAt(arg0.getFirstRow(), 0);
+		Integer lehrid = GlobalData.getInstance().getLehrgänge().getId(titles[col]);
+		Date lehrdate = util.StringToDate((String)gt.getValueAt(arg0.getFirstRow(), col));
+		if(lehrdate == null)
+			GlobalData.getInstance().removeMemberTraining(id, lehrid);
+		else {
+			Lehrgang lehr = new Lehrgang(lehrid,lehrdate);
+			GlobalData.getInstance().addMemberTraining(id, lehr);
+		}
+		if(util.DebugMemberTrainings)
+			System.out.println("Changed Member with id: " + id);
 	}
 
 }

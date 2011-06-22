@@ -23,4 +23,8 @@ public class Lehrgang {
 	public void setDatum(Date datum) {
 		Datum = datum;
 	}
+	
+	public Object[] getDBObject(Integer uid) {
+		return new Object[]{null,uid,id,Datum};
+	}
 }

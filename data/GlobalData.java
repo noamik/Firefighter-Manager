@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import datascheme.IdStringMatcher;
+import datascheme.Lehrgang;
 import datascheme.Mitglied;
 import datascheme.RankedElement;
 
@@ -131,6 +132,8 @@ public class GlobalData {
 			e.printStackTrace();
 		}
 		dbq.returnConnection();
+		//TODO: Update MemberTrainingsTable
+		MainApplicationWindow.getMainWindow().getMemberTrainingsPane().updateTable();
 		System.out.println("Added training!");
 	}
 	
@@ -144,6 +147,8 @@ public class GlobalData {
 		}
 		dbq.returnConnection();
 		MainApplicationWindow.getMainWindow().getTrainTable().getRankedElemTable().updateMemberTableData(this.Lehrgänge);
+		//TODO: Update MemberTrainingsTable
+		MainApplicationWindow.getMainWindow().getMemberTrainingsPane().updateTable();
 		System.out.println("Removed training!");
 	}
 	
@@ -182,6 +187,30 @@ public class GlobalData {
 		}
 		dbq.returnConnection();
 		System.out.println("Added status!");
+	}
+	
+	public void addMemberTraining(Integer id, Lehrgang lehr) {
+		Mitglied member = getMitglieder().get(id);
+		member.getAusbildung().addLehrgang(lehr);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.addMTraining(lehr.getDBObject(id));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
+	}
+	
+	public void removeMemberTraining(Integer uid, Integer aid) {
+		Mitglied member = getMitglieder().get(uid);
+		member.getAusbildung().removeLehrgang(aid);
+		sql.DBQuerie dbq 	= new sql.DBQuerie();
+		try {
+			dbq.deleteMTraining(uid, aid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbq.returnConnection();
 	}
 	
 	public void removeStatus(Integer Id) {

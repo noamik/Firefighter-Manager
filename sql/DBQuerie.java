@@ -47,26 +47,29 @@ public class DBQuerie {
 	private final String ID                  = "id";
 	private final String POS				 = "Position";
 	
-	private final String GET_MEMBER_LIST       = "SELECT * FROM Mitglieder;";
-	private final String GET_MEMBERS_TRAININGS = "SELECT * FROM Mitgliederausbildung WHERE " + MAS_MITGLID + " = ?;";
-	private final String GET_MEMBERS_KARR      = "SELECT * FROM Dienstgraddaten WHERE " + DGD_MitgliedsId + " = ?;";
-	private final String GET_TRAININGS         = "SELECT * FROM Ausbildungen;";
-	private final String GET_DIENSTGRADE       = "SELECT * FROM Dienstgrade;";
-	private final String GET_MEMBERSTATUS      = "SELECT * FROM MemberStatus;";
+	private final String GET_MEMBER_LIST       		= "SELECT * FROM Mitglieder;";
+	private final String GET_MEMBERS_TRAINING  		= "SELECT * FROM Mitgliederausbildung WHERE " + MAS_MITGLID + " = ? AND "+MAS_AUSBID+" = ?;";
+	private final String GET_MEMBERS_TRAININGS 		= "SELECT * FROM Mitgliederausbildung WHERE " + MAS_MITGLID + " = ?;";
+	private final String GET_MEMBERS_KARR      		= "SELECT * FROM Dienstgraddaten WHERE " + DGD_MitgliedsId + " = ?;";
+	private final String GET_TRAININGS         		= "SELECT * FROM Ausbildungen;";
+	private final String GET_DIENSTGRADE       		= "SELECT * FROM Dienstgrade;";
+	private final String GET_MEMBERSTATUS      		= "SELECT * FROM MemberStatus;";
 	
-	private final String ADD_MLIST_MEMBER      = "INSERT OR REPLACE INTO Mitglieder VALUES (?, ?, ?, ?, ?, ?, ?);";
-	private final String ADD_MTLIST_TRAINING   = "INSERT OR REPLACE INTO Mitgliederausbildung VALUES (?, ?, ?, ?);";
-	private final String ADD_AUSBILDUNG        = "INSERT OR REPLACE INTO Ausbildungen VALUES (?, ?, ?);";
-	private final String ADD_DIENSTGRAD        = "INSERT OR REPLACE INTO Dienstgrade VALUES (?, ?, ?);";
-	private final String ADD_MITGL_KARRIERE    = "INSERT OR REPLACE INTO Dienstgraddaten VALUES (?, ?, ?, ?);";
-	private final String ADD_MEMBERSTATUS      = "INSERT OR REPLACE INTO MemberStatus VALUES (?, ?, ?);";
+	private final String ADD_MLIST_MEMBER      		= "INSERT OR REPLACE INTO Mitglieder VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private final String ADD_MTLIST_TRAINING   		= "INSERT OR REPLACE INTO Mitgliederausbildung VALUES (?, ?, ?, ?);";
+	private final String ADD_NEW_MTLIST_TRAINING	= "INSERT OR REPLACE INTO Mitgliederausbildung (\""+MAS_MITGLID+"\",\""+MAS_AUSBID+"\",\""+MAS_DATE+"\") VALUES ( ?, ?, ?);";
+	private final String ADD_AUSBILDUNG        		= "INSERT OR REPLACE INTO Ausbildungen VALUES (?, ?, ?);";
+	private final String ADD_DIENSTGRAD        		= "INSERT OR REPLACE INTO Dienstgrade VALUES (?, ?, ?);";
+	private final String ADD_MITGL_KARRIERE    		= "INSERT OR REPLACE INTO Dienstgraddaten VALUES (?, ?, ?, ?);";
+	private final String ADD_MEMBERSTATUS      		= "INSERT OR REPLACE INTO MemberStatus VALUES (?, ?, ?);";
 	
-	private final String DEL_MEMBER            = "DELETE FROM Mitglieder WHERE "+ID+" = ?;";
-	private final String DEL_M_TRAINING        = "DELETE FROM Mitgliederausbildung WHERE "+ID+" = ?;";
-	private final String DEL_AUSBILDUNG        = "DELETE FROM Ausbildungen WHERE "+ID+" = ?;";
-	private final String DEL_DIENSTGRAD        = "DELETE FROM Dienstgrade WHERE "+ID+" = ?;";
-	private final String DEL_M_DIENSTGRAD      = "DELETE FROM Dienstgraddaten WHERE "+ID+" = ?;";
-	private final String DEL_MEMBERSTATUS      = "DELETE FROM MemberStatus WHERE "+ID+" = ?;";
+	private final String DEL_MEMBER            		= "DELETE FROM Mitglieder WHERE "+ID+" = ?;";
+	private final String DEL_M_TRAINING        		= "DELETE FROM Mitgliederausbildung WHERE "+ID+" = ?;";
+	private final String DEL_M_TRAINING_BY_AID 		= "DELETE FROM Mitgliederausbildung WHERE "+MAS_MITGLID+" = ? AND "+MAS_AUSBID+" = ?;";
+	private final String DEL_AUSBILDUNG        		= "DELETE FROM Ausbildungen WHERE "+ID+" = ?;";
+	private final String DEL_DIENSTGRAD        		= "DELETE FROM Dienstgrade WHERE "+ID+" = ?;";
+	private final String DEL_M_DIENSTGRAD      		= "DELETE FROM Dienstgraddaten WHERE "+ID+" = ?;";
+	private final String DEL_MEMBERSTATUS      		= "DELETE FROM MemberStatus WHERE "+ID+" = ?;";
 	
 	private DateFormat dfm  = util.util.DatumsFormat;
 	
@@ -261,6 +264,19 @@ public class DBQuerie {
 	}
 	
 	/**
+	 * @param uid
+	 * @param aid
+	 * @throws SQLException
+	 */
+	public void deleteMTraining(Integer uid, Integer aid) throws SQLException {
+		PreparedStatement prep = cn.prepareStatement(DEL_M_TRAINING_BY_AID);
+		prep.setInt(1, uid);
+		prep.setInt(2, aid);
+        prep.execute();
+        prep.close();
+	}
+	
+	/**
 	 * @param id
 	 * @throws SQLException
 	 */
@@ -332,9 +348,33 @@ public class DBQuerie {
 	 * @throws SQLException
 	 */
 	public void addMTraining(Object[] Entries) throws SQLException {
-		addEntry(1,Entries);
+		Integer id = getUID((Integer)Entries[1],(Integer)Entries[2]);
+		Entries[0] = id;
+		
+		if(id == null) {
+			Object[] tEntries = new Object[]{Entries[1],Entries[2],Entries[3]};
+			addEntry(6,tEntries);
+		} else {
+			addEntry(1,Entries);
+		}
 	}
 	
+	private Integer getUID(Integer uid, Integer aid) throws SQLException {
+		Integer id = null;
+		ResultSet rs;
+		PreparedStatement prep;
+        prep = cn.prepareStatement(this.GET_MEMBERS_TRAINING);
+        prep.setInt(1, uid);
+        prep.setInt(2, aid);
+        rs = prep.executeQuery();
+        if (rs.next()) {
+        	id = rs.getInt(ID);
+        }
+        prep.close();
+        rs.close();
+		return id;
+	}
+
 	/**
 	 * @param Entries - Have to be either String or Integer
 	 * @throws SQLException
@@ -387,11 +427,15 @@ public class DBQuerie {
 					break;
 			case 5: prep = cn.prepareStatement(ADD_MEMBERSTATUS);
 					break;
+			case 6: prep = cn.prepareStatement(ADD_NEW_MTLIST_TRAINING);
+					break;
 			default: return;
 		}
 		for(int i=1; i<=Entries.length;i++) {
 			if(Entries[i-1].getClass().isInstance(new String()))
 				prep.setString(i, (String)Entries[i-1]);
+			else if(Entries[i-1].getClass().isInstance(new Date()))
+				prep.setString(i, util.util.DateToString((Date)Entries[i-1]));
 			else
 				prep.setInt(i, (Integer)Entries[i-1]);
 		}
