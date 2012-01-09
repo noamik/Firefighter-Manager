@@ -1,5 +1,6 @@
 /**
  * Main Application Class
+ *
  * Initializes and manages the application
  */
 
