@@ -1,5 +1,6 @@
 /**
- * Main Application Class 
+ * Main Application Class
+ * Initializes and manages the application
  */
 
 import gui.MainApplicationWindow;
