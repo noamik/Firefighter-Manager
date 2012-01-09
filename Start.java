@@ -1,5 +1,5 @@
 /**
- * 
+ * Main Application Class 
  */
 
 import gui.MainApplicationWindow;
